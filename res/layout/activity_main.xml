@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,19 +22,7 @@
         android:gravity="center"
         android:hint="@string/input"
         android:inputType="text|numberDecimal" >
-
-        <requestFocus />
     </EditText>
-<!--
-    <Button
-        android:id="@+id/calc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/inputNumbers"
-        android:layout_below="@+id/inputNumbers"
-        android:layout_marginTop="38dp"
-        android:text="@string/calc" />
--->
 
     <TextView
         android:id="@+id/result"
@@ -44,5 +33,13 @@
         android:layout_marginTop="40dp"
         android:text="@string/result"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+    
+ 	<com.google.android.gms.ads.AdView
+ 	    android:id="@+id/adView"
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:layout_alignParentBottom="true"
+ 	    ads:adSize="BANNER"
+ 	    ads:adUnitId="ca-app-pub-5213700102366429/3333445991" />
+ 	
 </RelativeLayout>

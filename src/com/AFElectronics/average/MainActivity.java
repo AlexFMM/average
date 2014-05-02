@@ -1,19 +1,13 @@
 package com.AFElectronics.average;
 
+
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.text.*;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.os.Build;
 import android.widget.*;
+import com.google.android.gms.ads.*;
 
 public class MainActivity extends ActionBarActivity {
 	EditText  input;
@@ -21,15 +15,18 @@ public class MainActivity extends ActionBarActivity {
 	Toast error1;
 	Toast error2;
 	Toast about;
+	
+	private static final String AD_UNIT_ID = "ca-app-pub-5213700102366429/3333445991";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main); // inicializar a actividade
-
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
+		
+		// Look up the AdView as a resource and load a request.
+	    AdView adView = (AdView)this.findViewById(R.id.adView);
+	    AdRequest adRequest = new AdRequest.Builder().build();
+	    adView.loadAd(adRequest);
 		
 		//inicializar os componentes utilizados no layout 
 		input = (EditText)findViewById(R.id.inputNumbers);
@@ -38,7 +35,6 @@ public class MainActivity extends ActionBarActivity {
 		error2 = Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT );
 		about = Toast.makeText(getApplicationContext(), "Made by:\nAFElectronics©\n2014", Toast.LENGTH_LONG );
 		
-
 		input.addTextChangedListener(new TextWatcher() {
 
 		      @Override
@@ -77,8 +73,6 @@ public class MainActivity extends ActionBarActivity {
 		    });
 	}
 	
-
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -102,21 +96,6 @@ public class MainActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
 
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
 	
 }
