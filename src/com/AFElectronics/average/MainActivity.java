@@ -25,7 +25,10 @@ public class MainActivity extends ActionBarActivity {
 		
 		// Look up the AdView as a resource and load a request.
 	    AdView adView = (AdView)this.findViewById(R.id.adView);
-	    AdRequest adRequest = new AdRequest.Builder().build();
+	    AdRequest adRequest = new AdRequest.Builder()
+	    	.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+	    	.addTestDevice("0123456789ABCDEF")
+	    	.build();
 	    adView.loadAd(adRequest);
 		
 		//inicializar os componentes utilizados no layout 
@@ -45,8 +48,23 @@ public class MainActivity extends ActionBarActivity {
 					
 					if(numb.matches("")){// se nao estiver vazia executar o codigo
 						error1.show();
+						result.setText(getString(R.id.result));
 						return;
 					}
+					
+					if(numb.endsWith("  ")){// se tiver mais que dois espaços
+						error1.show();
+						input.setText(numb.substring(0, numb.length()-1));
+						input.setSelection(input.length());
+						return;
+					}
+					
+					if(!Character.isDigit(numb.charAt(0))){
+						error1.show();
+						input.setText("");
+						return;
+					}
+					
 					//partir a string inicial numa tabela e tirar os espaços
 					String[] numbs = numb.split(" ");
 					float tot=0;
