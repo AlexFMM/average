@@ -10,19 +10,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.AFElectronics.average.MainActivity$PlaceholderFragment" >
-  
-    <EditText
-        android:id="@+id/inputNumbers"
-        android:digits="0123456789 ."
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/input"
-        android:inputType="text|numberDecimal" >
-    </EditText>
 
     <TextView
         android:id="@+id/result"
@@ -42,5 +29,20 @@
  	    android:layout_alignParentBottom="true"
  	    ads:adSize="BANNER"
  	    ads:adUnitId="ca-app-pub-5213700102366429/3333445991" />
+
+ <EditText
+ 	    android:id="@+id/inputNumbers"
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:layout_alignLeft="@+id/adView"
+ 	    android:layout_alignParentTop="true"
+ 	    android:layout_marginTop="68dp"
+ 	    android:digits="0123456789 ."
+ 	    android:ems="10"
+ 	    android:freezesText="true"
+ 	    android:gravity="center"
+ 	    android:hint="@string/input"
+ 	    android:inputType="text" >
+ 	</EditText>
  	
 </RelativeLayout>

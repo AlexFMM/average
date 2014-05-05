@@ -3,6 +3,7 @@ package com.AFElectronics.average;
 
 import android.support.v7.app.ActionBarActivity;
 import android.text.*;
+import android.text.method.DigitsKeyListener;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,14 +28,13 @@ public class MainActivity extends ActionBarActivity {
 	    AdView adView = (AdView)this.findViewById(R.id.adView);
 	    AdRequest adRequest = new AdRequest.Builder()
 	    	.addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-	    	.addTestDevice("0123456789ABCDEF")
 	    	.build();
 	    adView.loadAd(adRequest);
 		
 		//inicializar os componentes utilizados no layout 
 		input = (EditText)findViewById(R.id.inputNumbers);
 		result = (TextView)findViewById(R.id.result);
-		error1 = Toast.makeText(getApplicationContext(), "Input not accepted", Toast.LENGTH_SHORT );
+		error1 = Toast.makeText(getApplicationContext(), "Input not accepted\ntry entering a number", Toast.LENGTH_SHORT );
 		error2 = Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_SHORT );
 		about = Toast.makeText(getApplicationContext(), "Made by:\nAFElectronics©\n2014", Toast.LENGTH_LONG );
 		
@@ -48,25 +48,45 @@ public class MainActivity extends ActionBarActivity {
 					
 					if(numb.matches("")){// se nao estiver vazia executar o codigo
 						error1.show();
-						result.setText(getString(R.id.result));
+						result.setText(getResources().getString(R.string.result));
+						return;
+					}
+						
+					if(!Character.isDigit(numb.charAt(0))){
+						error1.show();
+						input.setText("");
+						result.setText(getResources().getString(R.string.result));
 						return;
 					}
 					
-					if(numb.endsWith("  ")){// se tiver mais que dois espaços
+					if(numb.endsWith(" ")){
+						input.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+					}
+					else{
+						input.setKeyListener(DigitsKeyListener.getInstance("0123456789 ."));
+					}
+					
+					if(numb.contains(". ")){
+						input.setText(numb.replace(". ", ".0 "));
+						input.setSelection(input.length());
+					}
+					
+					//partir a string inicial numa tabela e tirar os espaços
+					String[] numbs = numb.split(" ");
+					s=numbs[numbs.length-1];
+					int np=0;
+					for( int i=0; i<s.length(); i++ ) {
+					    if( s.charAt(i)=='.' ) {
+					        np++;
+					    } 
+					}
+					if(np>1){
 						error1.show();
 						input.setText(numb.substring(0, numb.length()-1));
 						input.setSelection(input.length());
 						return;
 					}
-					
-					if(!Character.isDigit(numb.charAt(0))){
-						error1.show();
-						input.setText("");
-						return;
-					}
-					
-					//partir a string inicial numa tabela e tirar os espaços
-					String[] numbs = numb.split(" ");
+						
 					float tot=0;
 					//somar todos os numeros
 					for(int i=0;i<numbs.length;i++){
@@ -79,15 +99,18 @@ public class MainActivity extends ActionBarActivity {
 					result.setText(String.valueOf(mean));
 		      }
 
-		      @Override
-		      public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
 
-		      }
-
-		      @Override
-		      public void afterTextChanged(Editable s) {
-
-		      }
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				
+			}
 		    });
 	}
 	
@@ -107,13 +130,9 @@ public class MainActivity extends ActionBarActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_about) {
 			//abrir uma segunda actividade que vai ter as informações do about
-			//startActivity(new Intent(this, AboutActivity.class));
 			about.show();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-
-	
 }
